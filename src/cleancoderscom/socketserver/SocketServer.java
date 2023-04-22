@@ -8,19 +8,20 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class SocketServer {
-    private final SocketService service;
     private final int port;
+    private final SocketService service;
     private boolean running;
-    private ServerSocket serverSocket;
-    private ExecutorService executor;
+    private final ServerSocket serverSocket;
+    private final ExecutorService executor;
 
-    public SocketServer(int port, SocketService service) {
+    public SocketServer(int port, SocketService service) throws Exception {
         this.port = port;
         this.service = service;
+        serverSocket = new ServerSocket(port);
         executor = Executors.newFixedThreadPool(4);
     }
 
-    public long getPort() {
+    public int getPort() {
         return port;
     }
 
@@ -28,38 +29,31 @@ public class SocketServer {
         return service;
     }
 
-    public void stop() throws Exception {
-        // Should be called in the order it is called
-        running = false;
-        serverSocket.close();
-        executor.shutdown();
-        executor.awaitTermination(5, TimeUnit.MILLISECONDS);
-    }
-
-    public void start() throws IOException {
-        serverSocket = new ServerSocket(port);
-        Runnable connectionHandler =  new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (running) {
-                        Socket serviceSocket = serverSocket.accept();
-                        executor.execute(() -> service.serve(serviceSocket));
-                    }
-                } catch (IOException e) {
-                    if (running) {
-                        e.printStackTrace();
-                    }
+    public void start() {
+        Runnable connectionHandler = () -> {
+            try {
+                while(running) {
+                    Socket serviceSocket = serverSocket.accept();
+                    executor.execute(() -> service.serve(serviceSocket));
                 }
+            } catch(IOException e) {
+                if(running)
+                    e.printStackTrace();
             }
         };
-        executor.submit(connectionHandler);
+        executor.execute(connectionHandler);
 
-        this.running = true;
+        running = true;
     }
 
     public boolean isRunning() {
         return running;
     }
 
+    public void stop() throws Exception {
+        running = false;
+        serverSocket.close();
+        executor.shutdown();
+        executor.awaitTermination(1000, TimeUnit.MILLISECONDS);
+    }
 }

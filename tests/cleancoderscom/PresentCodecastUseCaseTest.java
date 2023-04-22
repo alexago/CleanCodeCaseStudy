@@ -12,14 +12,13 @@ import java.util.List;
 import static cleancoderscom.License.LicenseType.DOWNLOADING;
 import static cleancoderscom.License.LicenseType.VIEWING;
 import static org.junit.Assert.*;
-
 @RunWith(HierarchicalContextRunner.class)
 public class PresentCodecastUseCaseTest {
     private User user;
     private PresentCodecastUseCase useCase;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         TestSetup.setupContext();
         user = Context.userGateway.save(new User("User"));
         useCase = new PresentCodecastUseCase();
@@ -38,7 +37,7 @@ public class PresentCodecastUseCaseTest {
         private Codecast codecast;
 
         @Before
-        public void setupCodecast() throws Exception {
+        public void setupCodecast() {
             codecast = Context.codecastGateway.save(new Codecast());
         }
 
@@ -75,7 +74,7 @@ public class PresentCodecastUseCaseTest {
             private License viewLicense;
 
             @Before
-            public void setupLicense() throws Exception {
+            public void setupLicense() {
                 viewLicense = new License(VIEWING, user, codecast);
                 Context.licenseGateway.save(viewLicense);
             }
@@ -105,7 +104,7 @@ public class PresentCodecastUseCaseTest {
             private License downloadLicense;
 
             @Before
-            public void setupDownloadLicense() throws Exception {
+            public void setupDownloadLicense() {
                 downloadLicense = new License(DOWNLOADING, user, codecast);
                 Context.licenseGateway.save(downloadLicense);
             }
