@@ -21,6 +21,9 @@ public class TestSetup {
         User bob = new User("Bob");
         User jack = new User("Jack");
 
+        Context.userGateway.save(bob);
+        Context.userGateway.save(jack);
+
         Codecast e1 = new Codecast();
         e1.setTitle("Episode 1 - The Beginning");
         e1.setPublicationDate(new Date());
@@ -29,10 +32,14 @@ public class TestSetup {
         e2.setTitle("Episode 2 - The Continuation");
         e2.setPublicationDate(new Date(e1.getPublicationDate().getTime() + 1));
 
+        Context.codecastGateway.save(e1);
+        Context.codecastGateway.save(e2);
+
         License bobE1 = new License(VIEWING, bob, e1);
         License bobE2 = new License(VIEWING, bob, e2);
 
-        Context.userGateway.save(bob);
-        Context.userGateway.save(jack);
+        Context.licenseGateway.save(bobE1);
+        Context.licenseGateway.save(bobE2);
+
     }
 }

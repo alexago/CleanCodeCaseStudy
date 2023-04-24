@@ -35,17 +35,23 @@ public class ViewTemplate {
 
     private static String linesToChunks(List<String> allLines) {
         final var stringBuilder = new StringBuilder();
+//        int totalLength = 0;
+//        int totalLineNumber = 0;
         for (String line : allLines) {
-
             final String noEol = line.stripTrailing();
-            final int length = noEol.length();
+            final String noSpace = noEol.strip();
+            final int length = noSpace.length();
             if (length == 0) continue;
-
+//            totalLength += length;
+//            totalLineNumber += 2;
             stringBuilder.append(String.format("%X", length) + "\r\n");
-            stringBuilder.append(noEol + "\r\n");
+            stringBuilder.append(noSpace + "\r\n");
         }
         stringBuilder.append(0 + "\r\n");
         stringBuilder.append("\r\n");
+//        totalLineNumber += 2;
+//        System.out.println("[DEBUG] Total length : " + totalLength);
+//        System.out.println("[DEBUG] Total line number : " + totalLineNumber);
         return stringBuilder.toString();
     }
 }
