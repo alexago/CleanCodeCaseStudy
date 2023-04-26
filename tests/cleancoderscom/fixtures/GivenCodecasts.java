@@ -9,7 +9,12 @@ import java.text.SimpleDateFormat;
 public class GivenCodecasts {
     private String title;
     private String publicationDate;
+    private String permalink;
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("M/d/yyyy");
+
+    public void setPermalink(String permalink) {
+        this.permalink = permalink;
+    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -25,6 +30,7 @@ public class GivenCodecasts {
         System.out.println(publicationDate);
         System.out.println(dateFormat.parse(publicationDate));
         codecast.setPublicationDate(dateFormat.parse(publicationDate));
+        codecast.setPermalink(permalink);
         Context.codecastGateway.save(codecast);
     }
 }

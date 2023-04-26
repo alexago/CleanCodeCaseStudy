@@ -26,4 +26,12 @@ public class InMemoryCodecastGateway extends GatewayUtilities<Codecast> implemen
                 return codecast;
         return null;
     }
+
+    @Override
+    public Codecast findCodecastByPermalink(String permalink) {
+        for (Codecast codecast : getEntities())
+            if (codecast.getPermalink().equals(permalink))
+                return codecast;
+        return null;
+    }
 }

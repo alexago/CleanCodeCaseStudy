@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ViewTemplate {
@@ -29,9 +30,18 @@ public class ViewTemplate {
 
     public String getChunkedContent() {
         final List<String> pageLines = new ArrayList<>();
-        this.template.lines().forEach(s -> pageLines.add(s));
+        this.template.lines().forEach(s -> pageLines.add(s.strip().replaceAll("\r\n", "").replaceAll("\n", "")));
         return linesToChunks(pageLines);
     }
+
+    public String getNewChunkedContent() {
+        int chunkSize = 900;
+        template = template.replaceAll("\r\n", "");
+        template = template.replaceAll("\n", "");
+        List<String> chunks = Arrays.stream(template.split("(?<=\\G.{" + chunkSize + "})")).toList();
+        return linesToChunks(chunks);
+    }
+
 
     private static String linesToChunks(List<String> allLines) {
         final var stringBuilder = new StringBuilder();

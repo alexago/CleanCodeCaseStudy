@@ -12,12 +12,14 @@ public class Main {
         TestSetup.setupSampleData();
         SocketServer server = new SocketServer(8081, socket -> {
             try {
-                String frontPage = getFrontPage();
-//                System.out.println("[DEBUG] Size with chunk data: " + frontPage.length());
-//                System.out.println(frontPage);
+                String frontPage = getFrontPage();;
                 String response = makeResponse(frontPage);
-                socket.getOutputStream().write(response.getBytes());
+//                System.out.println("[DEBUG] Size with chunk data: " + frontPage.length());
+//                System.out.println(frontPage)
+                socket.getOutputStream().write(response.getBytes(), 0 , response.getBytes().length);
+                socket.close();
             } catch (IOException e) {
+                System.out.println(e.getMessage());
                 //e.printStackTrace();
             }
         });
@@ -25,11 +27,11 @@ public class Main {
     }
 
     private static String makeResponse(String content) {
-        return "HTTP/1.1 200 OK\n" +
-                "Content-Type: text/html; charset=utf-8\n" +
-                "Transfer-Encoding: chunked\n" +
+        return "HTTP/1.1 200 OK\r\n" +
+                "Content-Type: text/html; charset=utf-8\r\n" +
+                "Transfer-Encoding: chunked\r\n" +
                 //MessageFormat.format("Content-Length: {0}\n", content.length()) +
-                "\n" +
+                "\r\n" +
                 content;
     }
 

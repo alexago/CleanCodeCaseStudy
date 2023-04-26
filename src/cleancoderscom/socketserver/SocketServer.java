@@ -54,6 +54,6 @@ public class SocketServer {
         running = false;
         serverSocket.close();
         executor.shutdown();
-        executor.awaitTermination(1000, TimeUnit.MILLISECONDS);
+        executor.awaitTermination(5000, TimeUnit.MILLISECONDS);
     }
 }
