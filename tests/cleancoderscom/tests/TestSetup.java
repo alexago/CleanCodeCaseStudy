@@ -1,8 +1,9 @@
-package cleancoderscom;
+package cleancoderscom.tests;
 
-import cleancoderscom.doubles.InMemoryCodecastGateway;
-import cleancoderscom.doubles.InMemoryLicenseGateway;
-import cleancoderscom.doubles.InMemoryUserGateway;
+import cleancoderscom.*;
+import cleancoderscom.tests.doubles.InMemoryCodecastGateway;
+import cleancoderscom.tests.doubles.InMemoryLicenseGateway;
+import cleancoderscom.tests.doubles.InMemoryUserGateway;
 
 import java.util.Date;
 

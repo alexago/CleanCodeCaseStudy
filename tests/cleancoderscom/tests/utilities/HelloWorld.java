@@ -1,7 +1,7 @@
-package cleancoderscom.utilities;
+package cleancoderscom.tests.utilities;
 
-import cleancoderscom.socketserver.SocketServer;
-import cleancoderscom.socketserver.SocketService;
+import cleancoderscom.tests.socketserver.SocketServer;
+import cleancoderscom.tests.socketserver.SocketService;
 
 import java.io.IOException;
 import java.io.OutputStream;

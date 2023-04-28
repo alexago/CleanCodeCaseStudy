@@ -1,6 +1,6 @@
-package cleancoderscom.fixtures;
+package cleancoderscom.tests.fixtures;
 
-import cleancoderscom.TestSetup;
+import cleancoderscom.tests.TestSetup;
 
 public class FixtureSetup {
     public FixtureSetup() {

@@ -1,4 +1,4 @@
-package cleancoderscom.socketserver;
+package cleancoderscom.tests.socketserver;
 
 import java.io.IOException;
 import java.net.Socket;

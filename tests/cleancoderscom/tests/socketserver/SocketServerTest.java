@@ -1,4 +1,4 @@
-package cleancoderscom.socketserver;
+package cleancoderscom.tests.socketserver;
 
 import de.bechte.junit.runners.context.HierarchicalContextRunner;
 import org.junit.After;

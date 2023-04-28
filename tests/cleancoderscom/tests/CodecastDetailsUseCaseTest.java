@@ -24,12 +24,21 @@ public class CodecastDetailsUseCaseTest {
         codecast.setId("0");
         codecast.setTitle("Codecast");
         codecast.setPermalink("permalink-a");
-        final Date date = PresentCodecastUseCase.dateFormat.parse("1/2/2019");
+        final Date date = CodecastSummaryUseCase.dateFormat.parse("1/2/2019");
         codecast.setPublicationDate(date);
         Context.codecastGateway.save(codecast);
+
         PresentableCodecastDetails details = new CodecastDetailsUseCase().requestCodecastDetails(user, "permalink-a");
 
         assertEquals("Codecast", details.title);
         assertEquals("1/02/2019", details.publicationDate);
+    }
+
+    @Test
+    public void doesentCrashOnMissingCodecast() {
+        CodecastDetailsUseCase useCase = new CodecastDetailsUseCase();
+        PresentableCodecastDetails details = useCase.requestCodecastDetails(user, "missing");
+
+        assertEquals(false, details.wasFound);
     }
 }

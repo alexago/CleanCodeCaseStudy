@@ -1,6 +1,6 @@
-package cleancoderscom;
+package cleancoderscom.tests;
 
-import cleancoderscom.utilities.Main;
+import cleancoderscom.tests.utilities.Main;
 import org.junit.Test;
 
 public class MainTest {

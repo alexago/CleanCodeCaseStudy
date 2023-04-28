@@ -1,9 +1,6 @@
-package cleancoderscom.fixtures;
+package cleancoderscom.tests.fixtures;
 
-import cleancoderscom.Context;
-import cleancoderscom.PresentCodecastUseCase;
-import cleancoderscom.PresentableCodecast;
-import cleancoderscom.User;
+import cleancoderscom.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,16 +14,16 @@ public class OfCodeCasts {
 
     public List<Object> query() {
         User loggedInUser = Context.gateKeeper.getLoggedInUser();
-        PresentCodecastUseCase useCase = new PresentCodecastUseCase();
-        List<PresentableCodecast> presentableCodecasts = useCase.presentCodecasts(loggedInUser);
+        CodecastSummaryUseCase useCase = new CodecastSummaryUseCase();
+        List<PresentableCodecastSummary> presentableCodecasts = useCase.presentCodecasts(loggedInUser);
         List<Object> queryResponse = new ArrayList<Object>();
-        for (PresentableCodecast pcc : presentableCodecasts)
+        for (PresentableCodecastSummary pcc : presentableCodecasts)
             queryResponse.add(makeRow(pcc));
         return queryResponse;
 
     }
 
-    private List<Object> makeRow(PresentableCodecast pc) {
+    private List<Object> makeRow(PresentableCodecastSummary pc) {
         return list(
                 new Object[]{list("title", pc.title),
                         list("publication date", pc.publicationDate),

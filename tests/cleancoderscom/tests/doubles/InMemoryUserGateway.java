@@ -1,4 +1,4 @@
-package cleancoderscom.doubles;
+package cleancoderscom.tests.doubles;
 
 import cleancoderscom.User;
 import cleancoderscom.UserGateway;

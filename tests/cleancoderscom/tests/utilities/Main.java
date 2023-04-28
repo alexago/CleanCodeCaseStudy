@@ -1,8 +1,9 @@
-package cleancoderscom.utilities;
+package cleancoderscom.tests.utilities;
 
 import cleancoderscom.*;
-import cleancoderscom.socketserver.SocketServer;
-import cleancoderscom.view.ViewTemplate;
+import cleancoderscom.tests.TestSetup;
+import cleancoderscom.tests.socketserver.SocketServer;
+import cleancoderscom.tests.view.ViewTemplate;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,15 +37,15 @@ public class Main {
     }
 
     private static String getFrontPage() {
-        PresentCodecastUseCase useCase = new PresentCodecastUseCase();
+        CodecastSummaryUseCase useCase = new CodecastSummaryUseCase();
         TestSetup.setupSampleData();
         User bob = Context.userGateway.findUserByName("Bob");
-        List<PresentableCodecast> presentableCodecasts =  useCase.presentCodecasts(bob);
+        List<PresentableCodecastSummary> presentableCodecasts =  useCase.presentCodecasts(bob);
 
         try {
             final ViewTemplate frontpageTemplate = ViewTemplate.create("resources/html/frontpage.html");
             final StringBuilder codecastLines = new StringBuilder();
-            for (PresentableCodecast presentableCodecast : presentableCodecasts) {
+            for (PresentableCodecastSummary presentableCodecast : presentableCodecasts) {
                 final ViewTemplate codecastTemplate = ViewTemplate.create("resources/html/codecast.html");
 
                 codecastTemplate.replace("title", presentableCodecast.title);

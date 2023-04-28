@@ -1,4 +1,4 @@
-package cleancoderscom.view;
+package cleancoderscom.tests.view;
 
 import org.junit.Test;
 

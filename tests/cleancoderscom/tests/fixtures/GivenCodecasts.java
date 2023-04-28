@@ -1,4 +1,4 @@
-package cleancoderscom.fixtures;
+package cleancoderscom.tests.fixtures;
 
 import cleancoderscom.Codecast;
 import cleancoderscom.Context;
