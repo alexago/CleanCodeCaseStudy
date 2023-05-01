@@ -1,26 +1,46 @@
 package cleancoderscom.utilities;
 
-import cleancoderscom.*;
-import cleancoderscom.entities.User;
+import cleancoderscom.Context;
 import cleancoderscom.TestSetup;
+import cleancoderscom.entities.User;
+import cleancoderscom.http.Controller;
+import cleancoderscom.http.ParsedRequest;
+import cleancoderscom.http.RequestParser;
+import cleancoderscom.http.Router;
 import cleancoderscom.socketserver.SocketServer;
 import cleancoderscom.usecases.codecastSummaries.CodecastSummariesUseCase;
 import cleancoderscom.usecases.codecastSummaries.PresentableCodecastSummary;
 import cleancoderscom.view.ViewTemplate;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 public class Main {
     public static void main (String[] args) throws Exception {
+        Router router = new Router();
+        router.addPath("", new CodecastSummariesController());
+        router.addPath("episode", new CodecastDetailsController());
+
         TestSetup.setupSampleData();
         SocketServer server = new SocketServer(8081, socket -> {
             try {
-                String frontPage = getFrontPage();;
-                String response = makeResponse(frontPage);
+                StringBuilder textBuilder = new StringBuilder();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                ParsedRequest request = new RequestParser().parse(reader.readLine());
+                String response = router.route(request);
+
+//                String frontPage = getFrontPage();;
+//                String response = makeResponse(frontPage);
 //                System.out.println("[DEBUG] Size with chunk data: " + frontPage.length());
 //                System.out.println(frontPage)
-                socket.getOutputStream().write(response.getBytes(), 0 , response.getBytes().length);
+                if (response == null) {
+                    socket.getOutputStream().write("HTTP/1.1 404 OK\n".getBytes());
+                } else {
+                    socket.getOutputStream().write(response.getBytes(), 0 , response.getBytes().length);
+                }
+
                 socket.close();
             } catch (IOException e) {
                 System.out.println(e.getMessage());
@@ -28,6 +48,22 @@ public class Main {
             }
         });
         server.start();
+    }
+
+    static class CodecastSummariesController implements Controller {
+        @Override
+        public String handle(ParsedRequest request) {
+            String frontPage = getFrontPage();;
+            return makeResponse(frontPage);
+        }
+    }
+
+    static class CodecastDetailsController implements Controller {
+
+        @Override
+        public String handle(ParsedRequest request) {
+            return null;
+        }
     }
 
     private static String makeResponse(String content) {
@@ -58,7 +94,7 @@ public class Main {
                 codecastTemplate.replace("thumbnail", "https://web.archive.org/web/20140603043802im_/https://d26o5k45lnmm4v.cloudfront.net/YmluYXJ5OjIxNzA1Nw");
                 codecastTemplate.replace("contentActions","Buying options go here.");
                 codecastTemplate.replace("licenseOptions","License options go here.");
-
+                codecastTemplate.replace("permalink", presentableCodecast.permalink);
                 codecastLines.append(codecastTemplate.getContent());
             }
 
