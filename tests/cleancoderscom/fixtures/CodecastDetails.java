@@ -6,7 +6,7 @@ import cleancoderscom.usecases.codecastDetails.PresentableCodecastDetails;
 
 public class CodecastDetails {
 
-    private CodecastDetailsUseCase useCase = new CodecastDetailsUseCase();
+    private final CodecastDetailsUseCase useCase = new CodecastDetailsUseCase();
     private PresentableCodecastDetails details;
 
     public boolean requestCodecast(String permalink) {

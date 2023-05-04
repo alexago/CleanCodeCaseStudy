@@ -1,10 +1,10 @@
 package cleancoderscom.usecases.codecastDetails;
 
-import cleancoderscom.*;
+import cleancoderscom.Context;
+import cleancoderscom.TestSetup;
 import cleancoderscom.entities.Codecast;
 import cleancoderscom.entities.User;
-import cleancoderscom.TestSetup;
-import cleancoderscom.usecases.codecastSummaries.CodecastSummariesUseCase;
+import cleancoderscom.usecases.codecastSummaries.CodecastSummariesPresenter;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,7 +28,7 @@ public class CodecastDetailsUseCaseTest {
         codecast.setId("0");
         codecast.setTitle("Codecast");
         codecast.setPermalink("permalink-a");
-        final Date date = CodecastSummariesUseCase.dateFormat.parse("1/2/2019");
+        final Date date = CodecastSummariesPresenter.dateFormat.parse("1/2/2019");
         codecast.setPublicationDate(date);
         Context.codecastGateway.save(codecast);
 

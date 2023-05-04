@@ -160,6 +160,7 @@ public class SocketServerTest {
         @Test
         public void canEcho() throws Exception {
             server.start();
+            //Thread.yield();
             Socket s = new Socket("localhost", port);
             OutputStream os = s.getOutputStream();
             os.write("echo\n".getBytes());
@@ -172,6 +173,23 @@ public class SocketServerTest {
             String response = br.readLine();
             assertEquals("echo", response);
             server.stop();
+        }
+
+        @Test
+        public void multipleEchos() throws Exception {
+            server.start();
+            Thread.yield();
+            Socket s1 = new Socket("localhost", port);
+            Socket s2 = new Socket("localhost", port);
+
+            s1.getOutputStream().write("echo1\n".getBytes());
+            s2.getOutputStream().write("echo2\n".getBytes());
+
+            String response1 = new BufferedReader(new InputStreamReader(s1.getInputStream())).readLine();
+            String response2 = new BufferedReader(new InputStreamReader(s2.getInputStream())).readLine();
+            server.stop();
+            assertEquals("echo1", response1);
+            assertEquals("echo2", response2);
         }
     }
 }
