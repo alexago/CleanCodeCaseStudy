@@ -5,21 +5,12 @@ import cleancoderscom.entities.Codecast;
 import cleancoderscom.entities.License;
 import cleancoderscom.entities.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class CodecastSummariesUseCase {
+import static cleancoderscom.entities.License.LicenseType.DOWNLOADING;
+import static cleancoderscom.entities.License.LicenseType.VIEWING;
 
-    public List<PresentableCodecastSummary> presentCodecasts(User loggedInUser) {
-        ArrayList<PresentableCodecastSummary> presentableCodecasts = new ArrayList<PresentableCodecastSummary>();
-        List<Codecast> allCodecasts = Context.codecastGateway.findAllCodecastsSortedChronologically();
-
-        for (Codecast codecast : allCodecasts)
-            presentableCodecasts.add(CodecastSummariesPresenter.formatCodecast(loggedInUser, codecast));
-
-        return presentableCodecasts;
-    }
-
+public class CodecastSummariesUseCase implements CodecastSummariesInputBoundary {
     public static boolean isLicensedFor(License.LicenseType licenseType, User user, Codecast codecast) {
         List<License> licenses = Context.licenseGateway.findLicensesForUserAndCodecast(user, codecast);
         for (License l : licenses) {
@@ -29,5 +20,27 @@ public class CodecastSummariesUseCase {
         return false;
     }
 
+    @Override
+    public void summarizeCodecasts(User loggedInUser, CodecastSummariesOutputBoundary presenter) {
+        CodecastSummariesResponseModel responseModel = new CodecastSummariesResponseModel();
+        presenter.present(responseModel);
+
+        List<Codecast> allCodecasts = Context.codecastGateway.findAllCodecastsSortedChronologically();
+
+        for (Codecast codecast : allCodecasts) {
+            responseModel.addCodecastSummary(summarizeCodecast(codecast, loggedInUser));
+        }
+        presenter.present(responseModel);
+    }
+
+    private CodecastSummary summarizeCodecast(Codecast codecast, User user) {
+        CodecastSummary summary = new CodecastSummary();
+        summary.title = codecast.getTitle();
+        summary.permalink = codecast.getPermalink();
+        summary.publicationDate = codecast.getPublicationDate();
+        summary.isViewable = isLicensedFor(VIEWING, user, codecast);
+        summary.isDownloadable = isLicensedFor(DOWNLOADING, user, codecast);
+        return summary;
+    }
 }
 

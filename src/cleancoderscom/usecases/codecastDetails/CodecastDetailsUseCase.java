@@ -3,7 +3,6 @@ package cleancoderscom.usecases.codecastDetails;
 import cleancoderscom.Context;
 import cleancoderscom.entities.Codecast;
 import cleancoderscom.entities.User;
-import cleancoderscom.usecases.codecastSummaries.CodecastSummariesPresenter;
 
 public class CodecastDetailsUseCase {
     public PresentableCodecastDetails requestCodecastDetails(User loggedInUser, String permalink) {
@@ -12,7 +11,7 @@ public class CodecastDetailsUseCase {
         details.wasFound = false;
         if (codecast != null) {
             details.wasFound = true;
-            CodecastSummariesPresenter.formatSummaryFields(loggedInUser, codecast, details);
+            //CodecastSummariesPresenter.formatSummaryFields(loggedInUser, codecast, details);
         }
         return details;
     }

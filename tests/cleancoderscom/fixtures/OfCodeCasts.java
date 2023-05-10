@@ -1,13 +1,15 @@
 package cleancoderscom.fixtures;
 
-import cleancoderscom.*;
+import cleancoderscom.Context;
 import cleancoderscom.entities.User;
+import cleancoderscom.usecases.codecastSummaries.CodecastSummariesPresenter;
 import cleancoderscom.usecases.codecastSummaries.CodecastSummariesUseCase;
-import cleancoderscom.usecases.codecastSummaries.PresentableCodecastSummary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static cleancoderscom.usecases.codecastSummaries.CodecastSummariesViewModel.*;
 
 //OrderedQuery
 public class OfCodeCasts {
@@ -17,24 +19,24 @@ public class OfCodeCasts {
 
     public List<Object> query() {
         User loggedInUser = Context.gateKeeper.getLoggedInUser();
-        CodecastSummariesUseCase useCase = new CodecastSummariesUseCase();
-        List<PresentableCodecastSummary> presentableCodecasts = useCase.presentCodecasts(loggedInUser);
+        final CodecastSummariesUseCase useCase = new CodecastSummariesUseCase();
+        final CodecastSummariesPresenter presenter = new CodecastSummariesPresenter();
+        useCase.summarizeCodecasts(loggedInUser, presenter);
         List<Object> queryResponse = new ArrayList<Object>();
-        for (PresentableCodecastSummary pcc : presentableCodecasts)
-            queryResponse.add(makeRow(pcc));
+        for (ViewableCodecastSummary summary : presenter.getViewModel().getViewableCodecasts())
+            queryResponse.add(makeRow(summary));
         return queryResponse;
 
     }
 
-    private List<Object> makeRow(PresentableCodecastSummary pc) {
+    private List<Object> makeRow(ViewableCodecastSummary summary) {
         return list(
-                new Object[]{list("title", pc.title),
-                        list("publication date", pc.publicationDate),
-                        list("picture", pc.title),
-                        list("description", pc.title),
-                        list("viewable", pc.isViewable ? "+" : "-"),
-                        list("downloadable", pc.isDownloadable ? "+" : "-")}
-        );
+                list("title", summary.title),
+                list("publication date", summary.publicationDate),
+                list("picture", summary.title),
+                list("description", summary.title),
+                list("viewable", summary.isViewable ? "+" : "-"),
+                list("downloadable", summary.isDownloadable ? "+" : "-"));
     }
 
 }

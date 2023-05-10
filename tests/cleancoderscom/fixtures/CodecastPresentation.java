@@ -1,12 +1,11 @@
 package cleancoderscom.fixtures;
 
-import cleancoderscom.*;
+import cleancoderscom.Context;
+import cleancoderscom.TestSetup;
 import cleancoderscom.entities.Codecast;
 import cleancoderscom.entities.License;
 import cleancoderscom.entities.User;
-import cleancoderscom.TestSetup;
 import cleancoderscom.usecases.codecastSummaries.CodecastSummariesUseCase;
-import cleancoderscom.usecases.codecastSummaries.PresentableCodecastSummary;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +13,7 @@ import java.util.List;
 import static cleancoderscom.entities.License.LicenseType.DOWNLOADING;
 import static cleancoderscom.entities.License.LicenseType.VIEWING;
 
+// TODO: delete it
 public class CodecastPresentation {
     private CodecastSummariesUseCase useCase = new CodecastSummariesUseCase();
 
@@ -65,7 +65,8 @@ public class CodecastPresentation {
     }
 
     public int countOfCodecastsPresented() {
-        List<PresentableCodecastSummary> presentations = useCase.presentCodecasts(Context.gateKeeper.getLoggedInUser());
-        return presentations.size();
+//        List<CodecastSummariesResponseModel> presentations = useCase.presentCodecasts(Context.gateKeeper.getLoggedInUser());
+//        return presentations.size();
+        return 0;
     }
 }

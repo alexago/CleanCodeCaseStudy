@@ -45,5 +45,6 @@ public class TestSetup {
         Context.licenseGateway.save(bobE1);
         Context.licenseGateway.save(bobE2);
 
+        Context.gateKeeper.setLoggedInUser(bob);
     }
 }

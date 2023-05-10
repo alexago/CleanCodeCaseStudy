@@ -15,7 +15,8 @@ import java.io.InputStreamReader;
 public class Main {
     public static void main (String[] args) throws Exception {
         Router router = new Router();
-        router.addPath("", new CodecastSummariesController());
+        //TODO: replace null with the object. Added to pass compilation
+        router.addPath("", new CodecastSummariesController(null, null, null));
         router.addPath("episode", new CodecastDetailsController());
 
         TestSetup.setupSampleData();
