@@ -9,20 +9,6 @@ public class CodecastSummariesPresenter implements CodecastSummariesOutputBounda
     private CodecastSummariesResponseModel responseModel;
     private CodecastSummariesViewModel viewModel;
 
-//    public static void formatSummaryFields(User loggedInUser, Codecast codecast, CodecastSummariesResponseModel cc) {
-//        cc.title = codecast.getTitle();
-//        cc.publicationDate = dateFormat.format(codecast.getPublicationDate());
-//        cc.isViewable = CodecastSummariesUseCase.isLicensedFor(VIEWING, loggedInUser, codecast);
-//        cc.isDownloadable = CodecastSummariesUseCase.isLicensedFor(DOWNLOADING, loggedInUser, codecast);
-//        cc.permalink = codecast.getPermalink();
-//    }
-
-//    public static CodecastSummariesResponseModel formatCodecast(User loggedInUser, Codecast codecast) {
-//        CodecastSummariesResponseModel cc = new CodecastSummariesResponseModel();
-//        CodecastSummariesPresenter.formatSummaryFields(loggedInUser, codecast, cc);
-//        return cc;
-//    }
-
     @Override
     public CodecastSummariesViewModel getViewModel() {
         return viewModel;

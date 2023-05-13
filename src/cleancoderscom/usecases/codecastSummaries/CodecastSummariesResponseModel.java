@@ -5,11 +5,11 @@ import java.util.List;
 
 public class CodecastSummariesResponseModel {
     private final List<CodecastSummary> codecastSummaries;
-    public boolean isViewable;
-    public String title;
-    public String publicationDate;
-    public boolean isDownloadable;
-    public String permalink;
+//    public boolean isViewable;
+//    public String title;
+//    public String publicationDate;
+//    public boolean isDownloadable;
+//    public String permalink;
 
     public CodecastSummariesResponseModel() {
         this.codecastSummaries = new ArrayList<>();

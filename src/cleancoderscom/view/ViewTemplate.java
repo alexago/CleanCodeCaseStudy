@@ -28,13 +28,13 @@ public class ViewTemplate {
         return template;
     }
 
-    public String getChunkedContent() {
+    public String getChunkedContent_() {
         final List<String> pageLines = new ArrayList<>();
         this.template.lines().forEach(s -> pageLines.add(s.strip().replaceAll("\r\n", "").replaceAll("\n", "")));
         return linesToChunks(pageLines);
     }
 
-    public String getNewChunkedContent() {
+    public String getChunkedContent() {
         int chunkSize = 900;
         template = template.replaceAll("\r\n", "");
         template = template.replaceAll("\n", "");
@@ -45,23 +45,16 @@ public class ViewTemplate {
 
     private static String linesToChunks(List<String> allLines) {
         final var stringBuilder = new StringBuilder();
-//        int totalLength = 0;
-//        int totalLineNumber = 0;
         for (String line : allLines) {
             final String noEol = line.stripTrailing();
             final String noSpace = noEol.strip();
             final int length = noSpace.length();
             if (length == 0) continue;
-//            totalLength += length;
-//            totalLineNumber += 2;
             stringBuilder.append(String.format("%X", length) + "\r\n");
             stringBuilder.append(noSpace + "\r\n");
         }
         stringBuilder.append(0 + "\r\n");
         stringBuilder.append("\r\n");
-//        totalLineNumber += 2;
-//        System.out.println("[DEBUG] Total length : " + totalLength);
-//        System.out.println("[DEBUG] Total line number : " + totalLineNumber);
         return stringBuilder.toString();
     }
 }
